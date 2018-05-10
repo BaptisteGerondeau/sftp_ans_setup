@@ -4,7 +4,6 @@
     test_ssh_key: 
   vars_files:
           - vars/vendors.yml
-          - vars/admins.yml
           - vars/users.yml
           - vars/jslaves.yml
   tasks:
@@ -20,7 +19,6 @@
                name: "{{ item }}"
                state: present
        with_items:
-               - sftp_admin
                - "{{ vendors_list }}"
      
      - name: Create groups
@@ -46,22 +44,6 @@
        with_items:
                - "{{ jslaves }}"
 
-     - name: Create admins
-       user:
-               name: "{{ item.name }}"
-               shell: /bin/false
-               groups: sftp_admin
-       with_items:
-               - "{{ admins }}"
-
-     - name: Add key to the admins authorized list
-       authorized_key:
-               user: "{{ item.name }}"
-               state: present
-               key: "{{ item.ssh_key }}"
-       with_items:
-               - "{{ admins }}"
-     
      - name: Create sftp users
        user:
                name: "{{ item.name }}"
@@ -142,28 +124,6 @@
        with_items:
                - "{{ jslaves }}"
      
-     - name: Give proper ACL permissions
-       acl:
-               path: "/var/results/{{ item }}"
-               entity: sftp_admin
-               etype: group
-               permissions: rwx
-               default: no
-               state: present
-       with_items:
-               - "{{ vendors_list }}"
-
-     - name: Give proper ACL permissions
-       acl:
-               path: "/var/results/{{ item }}"
-               entity: sftp_admin
-               etype: group
-               permissions: rwx
-               default: yes
-               state: present
-       with_items:
-               - "{{ vendors_list }}"
-
      - name: Copy sshd_config
        template:
                src: "./templates/sshd_config.j2"

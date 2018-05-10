@@ -1,6 +1,0 @@
----
-admins:
-    - name: blabla
-      ssh_key: "{{ test_ssh_key }}"
-    - name: etc
-      ssh_key: "{{ test_ssh_key }}"
