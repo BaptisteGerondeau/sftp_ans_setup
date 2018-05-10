@@ -130,12 +130,6 @@ Match Group {{ item }}
         ForceCommand internal-sftp -d /var/results/qualcomm
 {% endfor %}
 
-Match Group sftp_admin
-	ChrootDirectory /var/results/
-        AllowTCPForwarding no
-        X11Forwarding no
-        ForceCommand internal-sftp -d /var/results -u 0557
-
 # Example of overriding settings on a per-user basis
 #Match User anoncvs
 #	X11Forwarding no
