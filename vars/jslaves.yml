@@ -1,0 +1,8 @@
+---
+jslaves:
+    - name: jslave-blabla-bechmark
+      cgroup: blabla
+      ssh_key:
+    - name: jslave-etc-benchmark
+      cgroup: etc
+      ssh_key:
